@@ -1,0 +1,23 @@
+{
+  "name": "composition-lt",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rchaser53/composition-lt.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rchaser53/composition-lt/issues"
+  },
+  "homepage": "https://github.com/rchaser53/composition-lt#readme",
+  "devDependencies": {
+    "fusuma": "^1.15.1"
+  }
+}
