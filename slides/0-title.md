@@ -78,6 +78,23 @@ export default {
 # Classコンポーネントってどうなったの?
 
 # Svelteと比較してどうなの？
+- コンポジションAPIとSvelte3のコンパイラのアプローチは概念的にはかなり近いところがある
+
+- scriptタグに関して
+  - コンポーネントインスタンスごとに呼び出される関数にラップされる(一度だけ実行されるのではなく)
+  - 暗黙的にリアクティブな変数として保存される
+  - スコープ内の全ての変数をレンダリングコンテキストに暗黙的に公開する
+  - $ステートメントを再実行コードにコンパイルする
+
+- VueはJavaScriptの標準に従っているけどSveleteはそうではない
+1. Sveleteはコンパイラを使用しないと実行できない事
+2. ロジックの一部を外部に抽出しようとすることができない点(svelte/store)
+  - https://svelte.dev/docs#svelte_store
+3. 変数のリアクティビティはtopレベルでのみ使用でき、関数内では使用できない点
+  - https://svelte.dev/repl/4b000d682c0548e79697ddffaeb757a3?version=3.6.2
+4. TypeScriptを使用する上で問題のあるsyntaxを使用してしまっていること
+  - https://github.com/sveltejs/svelte/issues/1639
+
 
 ----
 
@@ -85,3 +102,7 @@ export default {
 - https://vue-composition-api-rfc.netlify.com/
   - ありがたいことに別途ページが作られてます
   - 動画もついているので詳しく知りたい人はこちらをどうぞ
+
+- https://speakerdeck.com/kazupon/mamonakuyatutekuru-vue-dot-js-3
+  - これ見た方が早いのでは？
+
