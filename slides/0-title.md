@@ -7,10 +7,12 @@
 
 # kazupon氏の資料で済ませられるもの
 ## 大体以下の内容はkazupon氏の資料を読めば良い
-### url: https://speakerdeck.com/kazupon/mamonakuyatutekuru-vue-dot-js-3?slide=22
+url: https://speakerdeck.com/kazupon/mamonakuyatutekuru-vue-dot-js-3?slide=22
 - Motivation
 - Detailed Design
 - Drawbacks(欠点)の概要
+- Adoption strategy(2系でどう使うの?)
+  - 補足の資料がいると思う
 
 --- 
 
@@ -19,19 +21,36 @@
 
 - Refを導入する上でのoverhead
 - Ref vs Reactive
-- setupが冗長になって結局管理しにくいのでは？
-- 自由度が以前より増すために品質が結局下がるのでは？
+- setupのreturnする値が冗長では？
+- 柔軟性が以前より増す代わりに品質を維持するのが大変なのでは？
 - React Hooksとは何が違うの?
 - Classコンポーネントってどうなったの?
 - Svelteと比較してどうなの？
 
 ---
+
 # Refを導入する上でのoverhead
 ### thisへの依存をなくすためにrefを導入したがoverheadがある
 - 通常のprimitiveな値やobjectなどと区別しないといけない
   - 変数への命名を上手くやって回避して欲しい
 - 値の取得や変更に.valueを使わないといけないところが面倒
   - .valueを使わないようにするためのpluginを提供予定
+
+---
+
+# setupのreturnする値が冗長では？
+### ボイラープレートみたいで冗長に感じるかもしれないが…
+- レンダリングコンテキストに公開するものを明示的に制御できる
+- 処理を追っていくスタート地点にしやすい
+
+---
+
+# 柔軟性が以前より増す代わりに品質を維持するのが大変なのでは？
+### 品質の上限は上がるが同様に下限も下がる
+- 下がる下限は上限に比べてとても小さいからセーフ
+- ドキュメントやコミュニティにガイダンスはしっかりやる
+- Angular1系のcontrollerを想像した人がいたかもしれない
+  - Vue3系は共有スコープのコンテキストには依存しないので大丈夫
 
 ---
 
