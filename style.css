@@ -34,3 +34,12 @@ a {
 
 .title {
 }
+
+ul {
+  min-width: 50%;
+  font-size: 32px;
+}
+
+li {
+  line-height: 2;
+}
