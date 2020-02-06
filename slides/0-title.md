@@ -7,34 +7,121 @@
 
 # kazupon氏の資料で済ませられるもの
 ## 大体以下の内容はkazupon氏の資料を読めば良い
-url: https://speakerdeck.com/kazupon/mamonakuyatutekuru-vue-dot-js-3?slide=22
+### url: https://speakerdeck.com/kazupon/mamonakuyatutekuru-vue-dot-js-3?slide=22
+
 - Motivation
 - Detailed Design
 - Drawbacks(欠点)の概要
 - Adoption strategy(2系でどう使うの?)
   - 補足の資料がいると思う
 
---- 
+---
 
 # 今回やること
-### 触れなかったことや掘り下げられる内容を話していく
-
-- Refを導入する上でのoverhead
-- Ref vs Reactive
-- setupのreturnする値が冗長では？
-- 柔軟性が以前より増す代わりに品質を維持するのが大変なのでは？
-- React Hooksとは何が違うの?
-- Classコンポーネントってどうなったの?
-- Svelteと比較してどうなの？
+### 触れなかったことや掘り下げができそうな内容を話していく
+- Drawbacks(欠点)
+- Appendix(付録)
 
 ---
 
-# Refを導入する上でのoverhead
+# Drawbacks
+- Refを導入する上でのオーバーヘッド
+- Ref vs Reactive
+- setupのreturnする値が冗長では？
+- 柔軟性が以前より増す代わりに品質を維持するのが大変なのでは？
+
+---
+
+# Refを導入する上でのオーバーヘッド
 ### thisへの依存をなくすためにrefを導入したがoverheadがある
 - 通常のprimitiveな値やobjectなどと区別しないといけない
   - 変数への命名を上手くやって回避して欲しい
 - 値の取得や変更に.valueを使わないといけないところが面倒
   - .valueを使わないようにするためのpluginを提供予定
+
+---
+
+# Ref vs Reactive
+### Refは変数、Reactiveはオブジェクトの様なイメージ
+
+```js
+// style 1: separate variables(Ref)
+let x = 0
+let y = 0
+
+function updatePosition(e) {
+  x = e.pageX
+  y = e.pageY
+}
+
+// style 2: single object(Reactive)
+const pos = {
+  x: 0,
+  y: 0
+}
+
+function updatePosition(e) {
+  pos.x = e.pageX
+  pos.y = e.pageY
+}
+```
+
+---
+# Ref vs Reactive
+### Reactiveはそのままではdestructedもできないし、spreadもできない
+
+```js
+// composition function
+function useMousePosition() {
+  const pos = reactive({
+    x: 0,
+    y: 0
+  })
+
+  return pos
+}
+
+// consuming component
+export default {
+  setup() {
+    // reactivity lost!
+    const { x, y } = useMousePosition()
+    return {
+      x,
+      y
+    }
+
+    // reactivity lost!
+    return {
+      ...useMousePosition()
+    }
+
+    // this is the only way to retain reactivity.
+    // you must return `pos` as-is and reference x and y as `pos.x` and `pos.y` in the template.
+    return {
+      pos: useMousePosition()
+    }
+  }
+}
+```
+
+---
+# Ref vs Reactive
+### destructed, spreadしたい場合はRefでラップすること
+
+```js
+function useMousePosition() {
+  const pos = reactive({
+    x: 0,
+    y: 0
+  })
+
+  return toRefs(pos)
+}
+
+// x & y are now refs!
+const { x, y } = useMousePosition()
+```
 
 ---
 
@@ -54,6 +141,13 @@ url: https://speakerdeck.com/kazupon/mamonakuyatutekuru-vue-dot-js-3?slide=22
 
 ---
 
+# Appendix
+- React Hooksとは何が違うの?
+- Classコンポーネントってどうなったの?
+- Svelteと比較してどうなの？
+
+---
+
 # Classコンポーネントってどうなったの?
 - 元々の目的はTypeScriptの型推論のサポートが強化された代替APIを提供すること
 - Genericsの利用も検討したが、宣言が冗長のため採用せず
@@ -61,15 +155,15 @@ url: https://speakerdeck.com/kazupon/mamonakuyatutekuru-vue-dot-js-3?slide=22
 - ktsn氏が面白いことを呟いていたが、どうなるだろう…
   - https://twitter.com/ktsn/status/1223807962763812865
 
---- 
+---
 
 # React Hooksとは何が違うの?
 ## 一回しか呼び出されない
-  - 一般的で直感的なコードが書ける
-  - 呼び出される順番にあまり気をつけなくて良いし、条件的にしやすい
-  - 何度も呼び出されないからGCが走る心配が少ない
-  - 考慮事項がReact Hooksと比較すると少ない
-    - 考慮事項とは？
+- 一般的で直感的なコードが書ける
+- 呼び出される順番にあまり気をつけなくて良いし、条件的にしやすい
+- 何度も呼び出されないからGCが走る心配が少ない
+- 考慮事項がReact Hooksと比較すると少ない
+  - 考慮事項とは？
 
 ---
 
@@ -81,7 +175,7 @@ url: https://speakerdeck.com/kazupon/mamonakuyatutekuru-vue-dot-js-3?slide=22
   - 正しく処理をしないと古い値がキャプチャされてしまう
   - Vueのwatchとcomputedは、その辺りを勝手にやってくれる
 
---- 
+---
 
 # Svelteと比較してどうなの？
 ### コンポジションAPIとSvelte3は概念的にはかなり近いところがある
@@ -155,7 +249,7 @@ onMount(() => console.log('mounted!'))
 - TypeScriptを使用する上で問題のあるsyntaxを使用してしまっていること
   - https://github.com/sveltejs/svelte/issues/1639
 
-----
+---
 
 # reference
 - https://vue-composition-api-rfc.netlify.com/
