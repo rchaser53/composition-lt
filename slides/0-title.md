@@ -169,7 +169,7 @@ const { x, y } = useMousePosition()
 
 # React Hooksを使う上での考慮事項
 - useCallbackの利用の有無
-  - インラインハンドラーを書くと子コンポーネントが再レンダリングされてしまう
+  - インラインハンドラを書くと子コンポーネントが再レンダリングされてしまう
   - 回避するのにuseCallbackを使う
 - useEffectとuseMemoを使った際の依存関係のハンドリング
   - 正しく処理をしないと古い値がキャプチャされてしまう
@@ -223,6 +223,7 @@ function increment() {
   count++
 }
 
+// コンポーネントが読み込まれた際に実行される
 $: console.log(count)
 
 onMount(() => console.log('mounted!'))
@@ -232,32 +233,34 @@ onMount(() => console.log('mounted!'))
 ---
 
 # VueはJavaScriptの標準に従っている
-## 近い点
+## 似ている点
 - コンポーネントのインスタンスごとに呼び出される関数にラップされる(一度だけ実行されるのではなく)
 - 暗黙的にリアクティブな変数として保存される
 - スコープ内の全ての変数をレンダリングコンテキストに公開する
-- $ステートメントを再実行コードにコンパイルする
+- コンポーネントが読み込まれた際に実行される
+  - watchと比較したいのだろうけど、挙動はどう考えても違う気がする
+  - 原文は「Compiles $ statements into re-executed code」
 
 ---
 
 # Vueと比較した際の欠点
-- Sveleteはコンパイラを使用しないと実行できない事
+- Sveleteはコンパイラである点
 - ロジックの一部を外部に抽出しようとすることができない点(svelte/store)
   - https://svelte.dev/docs#svelte_store
 - 変数のリアクティビティはtopレベルでのみ使用でき、関数内では使用できない点
   - https://svelte.dev/repl/4b000d682c0548e79697ddffaeb757a3?version=3.6.2
-- TypeScriptを使用する上で問題のあるsyntaxを使用してしまっていること
+- TypeScriptを使用する上で問題のあるsyntaxを使用してしまっている点
   - https://github.com/sveltejs/svelte/issues/1639
 
 ---
 
 # reference
 - https://vue-composition-api-rfc.netlify.com/
-  - ありがたいことに別途ページが作られてます
+  - ありがたいことに別途ページが作られている
   - 動画もついているので詳しく知りたい人はこちらをどうぞ
 
 - https://speakerdeck.com/kazupon/mamonakuyatutekuru-vue-dot-js-3
-  - これ見た方が早いのでは？
+  - この資料はこれの補完のポジション
 
 - https://github.com/uki213/LearningCompositionApi
   - composition apiを使ったexample repository
