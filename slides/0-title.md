@@ -42,7 +42,7 @@
 ---
 
 # Ref vs Reactive
-### Refは変数、Reactiveはオブジェクトの様なイメージ
+### Refはプリミティブな変数、Reactiveはオブジェクトの様なイメージ
 
 ```js
 // style 1: separate variables(Ref)
