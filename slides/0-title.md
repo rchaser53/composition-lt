@@ -154,6 +154,8 @@ const { x, y } = useMousePosition()
 - 代わりにdecoratorの利用を検討したがstage-2なので採用せず
 - ktsn氏が面白いことを呟いていたが、どうなるだろう…
   - https://twitter.com/ktsn/status/1223807962763812865
+  - 2020/2/28現在vue-class-componentを見る限りdecoratorは利用している様子
+    - https://class-component.vuejs.org/
 
 ---
 
@@ -171,6 +173,7 @@ const { x, y } = useMousePosition()
 - useCallbackの利用の有無
   - インラインハンドラを書くと子コンポーネントが再レンダリングされてしまう
   - 回避するのにuseCallbackを使う
+  - https://github.com/rchaser53/react-playground-2020/blob/master/pages/index.js
 - useEffectとuseMemoを使った際の依存関係のハンドリング
   - 正しく処理をしないと古い値がキャプチャされてしまう
   - Vueのwatchとcomputedは、その辺りを勝手にやってくれる
