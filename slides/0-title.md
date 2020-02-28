@@ -13,7 +13,7 @@
 - Detailed Design
 - Drawbacks(欠点)の概要
 - Adoption strategy(2系でどう使うの?)
-  - 補足の資料がいると思う
+  - 補足資料(https://github.com/vuejs/composition-api#usage)
 
 ---
 
@@ -27,7 +27,7 @@
 # Drawbacks
 - Refを導入する上でのオーバーヘッド
 - Ref vs Reactive
-- setupのreturnする値が冗長では？
+- setupのreturnが冗長では？
 - 柔軟性が以前より増す代わりに品質を維持するのが大変なのでは？
 
 ---
@@ -125,7 +125,7 @@ const { x, y } = useMousePosition()
 
 ---
 
-# setupのreturnする値が冗長では？
+# setupのreturnが冗長では？
 ### ボイラープレートみたいで冗長に感じるかもしれないが…
 - レンダリングコンテキストに公開するものを明示的に制御できる
 - 処理を追っていくスタート地点にしやすい
