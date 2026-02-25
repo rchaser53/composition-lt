@@ -18,6 +18,6 @@
   },
   "homepage": "https://github.com/rchaser53/composition-lt#readme",
   "devDependencies": {
-    "fusuma": "^1.15.1"
+    "fusuma": "^2.8.4"
   }
 }
